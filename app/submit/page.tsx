@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { supabase } from '../lib/supabase'
 
 export default function SubmitPage() {
@@ -8,11 +9,13 @@ export default function SubmitPage() {
   const [message, setMessage] = useState('')
   const [rating, setRating] = useState(5)
   const [submitted, setSubmitted] = useState(false)
+  const searchParams = useSearchParams()
+  const userId = searchParams.get('user_id')
 
   const handleSubmit = async () => {
     const { error } = await supabase
       .from('testimonials')
-      .insert([{ name, message, rating }])
+      .insert([{ name, message, rating, user_id: userId }])
 
     if (!error) {
       setSubmitted(true)

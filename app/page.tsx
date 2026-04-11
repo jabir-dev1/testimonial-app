@@ -1,3 +1,4 @@
+import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import { supabase } from './lib/supabase'
 
 export default async function Home() {
@@ -11,11 +12,16 @@ export default async function Home() {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-4 border-b">
         <h1 className="text-xl font-bold text-blue-600">TestimonialApp</h1>
-        <div className="flex gap-4">
-          <button className="text-gray-600 hover:text-blue-600">Login</button>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-            Get Started
-          </button>
+        <div className="flex gap-4 items-center">
+          <SignInButton mode="modal">
+            <button className="text-gray-600 hover:text-blue-600">Login</button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+              Get Started
+            </button>
+          </SignUpButton>
+          <UserButton afterSignOutUrl="/" />
         </div>
       </nav>
 
