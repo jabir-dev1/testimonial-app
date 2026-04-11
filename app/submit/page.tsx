@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '../lib/supabase'
 
-export default function SubmitPage() {
+function SubmitForm() {
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
   const [rating, setRating] = useState(5)
@@ -16,10 +16,7 @@ export default function SubmitPage() {
     const { error } = await supabase
       .from('testimonials')
       .insert([{ name, message, rating, user_id: userId }])
-
-    if (!error) {
-      setSubmitted(true)
-    }
+    if (!error) setSubmitted(true)
   }
 
   if (submitted) {
@@ -35,7 +32,6 @@ export default function SubmitPage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-white px-8">
       <div className="w-full max-w-md">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Share Your Experience</h1>
-
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Your Name</label>
           <input
@@ -45,7 +41,6 @@ export default function SubmitPage() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Your Testimonial</label>
           <textarea
@@ -55,7 +50,6 @@ export default function SubmitPage() {
             onChange={(e) => setMessage(e.target.value)}
           />
         </div>
-
         <div className="mb-6">
           <label className="block text-gray-700 mb-2">Rating</label>
           <select
@@ -70,7 +64,6 @@ export default function SubmitPage() {
             <option value={1}>⭐ - Terrible</option>
           </select>
         </div>
-
         <button
           onClick={handleSubmit}
           className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg hover:bg-blue-700"
@@ -79,5 +72,13 @@ export default function SubmitPage() {
         </button>
       </div>
     </main>
+  )
+}
+
+export default function SubmitPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SubmitForm />
+    </Suspense>
   )
 }
