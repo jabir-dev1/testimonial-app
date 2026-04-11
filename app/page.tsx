@@ -21,7 +21,7 @@ export default async function Home() {
               Get Started
             </button>
           </SignUpButton>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </div>
       </nav>
 
