@@ -1,6 +1,6 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
+import { useUser, UserButton } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
@@ -18,10 +18,6 @@ export default function Dashboard() {
         .from('testimonials')
         .select('*')
         .eq('user_id', user.id)
-
-      console.log('user id:', user.id)
-      console.log('data:', data)
-      console.log('error:', error)
 
       setTestimonials(data || [])
       setLoading(false)
@@ -43,8 +39,15 @@ export default function Dashboard() {
   )
 
   return (
-    <main className="min-h-screen bg-gray-50 px-8 py-12">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-gray-50">
+
+      {/* Navbar */}
+      <nav className="flex items-center justify-between px-8 py-4 bg-white border-b">
+        <h1 className="text-xl font-bold text-blue-600">TestimonialApp</h1>
+        <UserButton />
+      </nav>
+
+      <div className="px-8 py-12 max-w-4xl mx-auto">
 
         <h1 className="text-3xl font-bold text-gray-900">
           Welcome, {user.firstName || user.emailAddresses[0].emailAddress} 👋
