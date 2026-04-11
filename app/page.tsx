@@ -1,7 +1,12 @@
 import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
 import { supabase } from './lib/supabase'
 
 export default async function Home() {
+  const { userId } = await auth()
+  if (userId) redirect('/dashboard')
+
   const { data: testimonials } = await supabase
     .from('testimonials')
     .select('*')
