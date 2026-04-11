@@ -4,6 +4,7 @@ export default async function WallPage({ params }: { params: { slug: string } })
   const { data: testimonials } = await supabase
     .from('testimonials')
     .select('*')
+    .eq('user_id', params.slug)
 
   return (
     <main className="min-h-screen bg-gray-50 px-8 py-16">
