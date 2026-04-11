@@ -1,20 +1,33 @@
-import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
-import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
+'use client'
+
+import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from './lib/supabase'
 
-export default async function Home() {
-  const { userId } = await auth()
-  if (userId) redirect('/dashboard')
+export default function Home() {
+  const { user, isLoaded } = useUser()
+  const router = useRouter()
+  const [testimonials, setTestimonials] = useState<any[]>([])
 
-  const { data: testimonials } = await supabase
-    .from('testimonials')
-    .select('*')
+  useEffect(() => {
+    if (isLoaded && user) {
+      router.push('/dashboard')
+    }
+  }, [isLoaded, user])
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const { data } = await supabase
+        .from('testimonials')
+        .select('*')
+      setTestimonials(data || [])
+    }
+    fetchTestimonials()
+  }, [])
 
   return (
     <main className="min-h-screen bg-white">
-
-      {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-4 border-b">
         <h1 className="text-xl font-bold text-blue-600">TestimonialApp</h1>
         <div className="flex gap-4 items-center">
@@ -30,7 +43,6 @@ export default async function Home() {
         </div>
       </nav>
 
-      {/* Hero */}
       <section className="flex flex-col items-center justify-center text-center px-8 py-24">
         <h2 className="text-5xl font-bold text-gray-900 max-w-2xl">
           Collect Testimonials That Win You More Clients
@@ -43,7 +55,6 @@ export default async function Home() {
         </button>
       </section>
 
-      {/* Testimonials from Database */}
       <section className="px-8 py-16 bg-gray-50">
         <h3 className="text-2xl font-bold text-center mb-8">What People Are Saying</h3>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -56,7 +67,6 @@ export default async function Home() {
           ))}
         </div>
       </section>
-
     </main>
   )
 }
