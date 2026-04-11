@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase'
 
 export default function Dashboard() {
   const { user, isLoaded } = useUser()
-  const [testimonials, setTestimonials] = useState([])
+  const [testimonials, setTestimonials] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
