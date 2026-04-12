@@ -21,6 +21,7 @@ export default function Home() {
       const { data } = await supabase
         .from('testimonials')
         .select('*')
+        .eq('featured', true)
       setTestimonials(data || [])
     }
     fetchTestimonials()
@@ -44,13 +45,13 @@ export default function Home() {
       </nav>
 
       <section className="flex flex-col items-center justify-center text-center px-8 py-24">
-        <h2 className="text-5xl font-bold text-gray-900 max-w-2xl">
+        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 max-w-2xl">
           Collect Testimonials That Win You More Clients
         </h2>
-        <p className="mt-6 text-xl text-gray-500 max-w-xl">
+        <p className="mt-6 text-lg md:text-xl text-gray-500 max-w-xl">
           The easiest way for coaches and small businesses to collect and display social proof.
         </p>
-        <button className="mt-8 bg-blue-600 text-white px-8 py-4 rounded-lg text-lg hover:bg-blue-700">
+        <button className="mt-8 bg-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg hover:bg-blue-700">
           Start For Free
         </button>
       </section>
