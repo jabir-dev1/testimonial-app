@@ -29,7 +29,7 @@ function SubmitForm() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-white px-8">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-white px-4 md:px-8">
       <div className="w-full max-w-md">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Share Your Experience</h1>
         <div className="mb-4">
