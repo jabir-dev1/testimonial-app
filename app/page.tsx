@@ -29,9 +29,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-white">
-      <nav className="flex items-center justify-between px-8 py-4 border-b">
+      <nav className="flex items-center justify-between px-4 md:px-8 py-4 border-b">
         <h1 className="text-xl font-bold text-blue-600">TestimonialApp</h1>
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 md:gap-4 items-center">
           <SignInButton mode="modal">
             <button className="text-gray-600 hover:text-blue-600">Login</button>
           </SignInButton>
