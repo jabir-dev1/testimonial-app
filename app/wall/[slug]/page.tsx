@@ -1,14 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 
-export default function WallPage({ params }: { params: { slug: string } }) {
+export default function WallPage() {
+  const params = useParams()
+  const slug = params?.slug as string
   const [testimonials, setTestimonials] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const slug = params.slug
+    if (!slug) return
     console.log('fetching for slug:', slug)
 
     const fetchTestimonials = async () => {
@@ -18,14 +21,12 @@ export default function WallPage({ params }: { params: { slug: string } }) {
         .eq('user_id', slug)
 
       console.log('data:', data)
-      console.log('error:', error)
-
       setTestimonials(data || [])
       setLoading(false)
     }
 
     fetchTestimonials()
-  }, [])
+  }, [slug])
 
   return (
     <main className="min-h-screen bg-gray-50 px-8 py-16">
