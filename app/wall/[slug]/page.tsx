@@ -8,18 +8,24 @@ export default function WallPage({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const slug = params.slug
+    console.log('fetching for slug:', slug)
+
     const fetchTestimonials = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('testimonials')
         .select('*')
-        .eq('user_id', params.slug)
+        .eq('user_id', slug)
+
+      console.log('data:', data)
+      console.log('error:', error)
 
       setTestimonials(data || [])
       setLoading(false)
     }
 
     fetchTestimonials()
-  }, [params.slug])
+  }, [])
 
   return (
     <main className="min-h-screen bg-gray-50 px-8 py-16">
