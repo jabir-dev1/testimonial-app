@@ -14,11 +14,12 @@ export default function WallPage() {
     if (!slug) return
     console.log('fetching for slug:', slug)
 
-    const fetchTestimonials = async () => {
-      const { data, error } = await supabase
-        .from('testimonials')
-        .select('*')
-        .eq('user_id', slug)
+   const fetchTestimonials = async () => {
+  const { data } = await supabase
+    .from('testimonials')
+    .select('*')
+    .eq('user_id', slug)
+    .gte('rating', 4)
 
       console.log('data:', data)
       setTestimonials(data || [])

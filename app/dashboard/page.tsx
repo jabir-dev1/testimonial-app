@@ -67,6 +67,16 @@ export default function Dashboard() {
             {typeof window !== 'undefined' ? window.location.origin : ''}/submit?user_id={user.id}
           </p>
         </div>
+       {/* Embed Widget */}
+          <div className="mt-4 bg-white/5 border border-white/10 p-4 rounded-2xl">
+            <p className="text-sm text-gray-400">Embed on your website</p>
+            <p className="mt-1 text-xs text-gray-500 mb-2">Copy and paste this into your website HTML</p>
+            <div className="bg-black/30 rounded-lg p-3">
+              <p className="text-xs font-mono text-green-400 break-all">
+                {'<script src="' + (typeof window !== 'undefined' ? window.location.origin : '') + '/embed.js?user_id=' + user.id + '"></script>'}
+              </p>
+            </div>
+          </div>
 
         {/* Testimonials */}
         <div className="mt-8">
