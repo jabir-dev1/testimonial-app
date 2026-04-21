@@ -1,6 +1,7 @@
 (function() {
   const script = document.currentScript
   const userId = new URLSearchParams(script.src.split('?')[1]).get('user_id')
+  const appUrl = script.src.split('/embed.js')[0]
   
   if (!userId) return
 
@@ -11,15 +12,7 @@
 
   container.innerHTML = '<p style="text-align:center; color:#888;">Loading testimonials...</p>'
 
-  fetch('https://yaotiqldqkpkjoolnwev.supabase.co/rest/v1/testimonials?user_id=eq.' + userId + '&rating=gte.4&select=name,message,rating', {
-    method: 'GET',
-    headers: {
-      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlhb3RpcWxkcWtwamtvbG53ZXYiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc0NDM1MjQ5MCwiZXhwIjoyMDU5OTI4NDkwfQ.H3opeCP2sL6JhFSVBEWMNqMf8v7NOhLDFVCWKPeT4Qw',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlhb3RpcWxkcWtwamtvbG53ZXYiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc0NDM1MjQ5MCwiZXhwIjoyMDU5OTI4NDkwfQ.H3opeCP2sL6JhFSVBEWMNqMf8v7NOhLDFVCWKPeT4Qw',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  })
+  fetch(appUrl + '/api/widget?user_id=' + userId)
   .then(function(r) { return r.json() })
   .then(function(testimonials) {
     if (!testimonials || !testimonials.length) {
