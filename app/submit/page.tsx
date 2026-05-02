@@ -3,6 +3,7 @@
 import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '../lib/supabase'
+import { motion } from 'framer-motion'
 
 function SubmitForm() {
   const [name, setName] = useState('')
@@ -57,98 +58,147 @@ function SubmitForm() {
 
   if (submitted) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="text-center">
-          <div className="text-5xl mb-4">🎉</div>
-          <h1 className="text-3xl font-bold text-white">Thank You!</h1>
-          <p className="mt-4 text-gray-400">Your testimonial has been submitted.</p>
-        </div>
+      <main className="flex min-h-screen flex-col items-center justify-center bg-slate-50">
+        <motion.div
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+          className="text-center"
+        >
+          <div className="text-6xl mb-4">🎉</div>
+          <h1 className="text-3xl font-bold text-slate-900">Thank You!</h1>
+          <p className="mt-4 text-slate-500">Your testimonial has been submitted.</p>
+        </motion.div>
       </main>
     )
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 md:px-8 py-12">
-      <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Share Your Experience</h1>
-        <p className="text-gray-400 text-sm mb-6">Your feedback means the world 💜</p>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 md:px-8 py-12">
 
-        <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2">Your Name</label>
+      {/* Background Grid */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50 pointer-events-none"></div>
+
+      <motion.div
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="relative z-10 w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8"
+      >
+        <div className="mb-6">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-1">
+            Share Your Experience
+          </h1>
+          <p className="text-slate-500 text-sm">Your feedback means the world 💜</p>
+        </div>
+
+        {/* Name */}
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="mb-4"
+        >
+          <label className="block text-slate-700 text-sm font-medium mb-2">Your Name</label>
           <input
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             placeholder="John Doe"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </div>
+        </motion.div>
 
-        <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2">Your Testimonial</label>
+        {/* Message */}
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-4"
+        >
+          <label className="block text-slate-700 text-sm font-medium mb-2">Your Testimonial</label>
           <textarea
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 h-32 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 h-32 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             placeholder="Share your experience..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-        </div>
+        </motion.div>
 
-        <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2">Rating</label>
+        {/* Rating */}
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-4"
+        >
+          <label className="block text-slate-700 text-sm font-medium mb-2">Rating</label>
           <select
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             value={rating}
             onChange={(e) => setRating(Number(e.target.value))}
           >
-            <option value={5} className="bg-slate-900">⭐⭐⭐⭐⭐ Excellent</option>
-            <option value={4} className="bg-slate-900">⭐⭐⭐⭐ Good</option>
-            <option value={3} className="bg-slate-900">⭐⭐⭐ Average</option>
-            <option value={2} className="bg-slate-900">⭐⭐ Poor</option>
-            <option value={1} className="bg-slate-900">⭐ Terrible</option>
+            <option value={5}>⭐⭐⭐⭐⭐ Excellent</option>
+            <option value={4}>⭐⭐⭐⭐ Good</option>
+            <option value={3}>⭐⭐⭐ Average</option>
+            <option value={2}>⭐⭐ Poor</option>
+            <option value={1}>⭐ Terrible</option>
           </select>
-        </div>
+        </motion.div>
 
-        {/* Before/After Photos - Optional */}
-        <div className="mb-4 bg-white/5 border border-white/10 rounded-xl p-4">
-          <p className="text-gray-300 text-sm font-medium mb-1">Before & After Photos</p>
-          <p className="text-gray-500 text-xs mb-3">Optional — only for transformation results</p>
+        {/* Before/After Photos */}
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4"
+        >
+          <p className="text-slate-700 text-sm font-medium mb-1">Before & After Photos</p>
+          <p className="text-slate-400 text-xs mb-3">Optional — only for transformation results</p>
 
           <div className="mb-3">
-            <label className="block text-gray-400 text-xs mb-1">Before Photo</label>
+            <label className="block text-slate-500 text-xs mb-1">Before Photo</label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => setBeforeImage(e.target.files?.[0] || null)}
-              className="w-full text-gray-400 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white file:text-xs hover:file:bg-purple-500"
+              className="w-full text-slate-500 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:text-xs hover:file:bg-indigo-500"
             />
           </div>
 
           <div>
-            <label className="block text-gray-400 text-xs mb-1">After Photo</label>
+            <label className="block text-slate-500 text-xs mb-1">After Photo</label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => setAfterImage(e.target.files?.[0] || null)}
-              className="w-full text-gray-400 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white file:text-xs hover:file:bg-purple-500"
+              className="w-full text-slate-500 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:text-xs hover:file:bg-indigo-500"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <button
+        {/* Submit Button */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white py-3 rounded-lg text-base font-medium transition"
+          className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white py-3 rounded-xl text-base font-semibold transition"
         >
           {loading ? 'Submitting...' : 'Submit Testimonial →'}
-        </button>
-      </div>
+        </motion.button>
+
+      </motion.div>
     </main>
   )
 }
 
 export default function SubmitPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Loading...</div>}>
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">
+        Loading...
+      </div>
+    }>
       <SubmitForm />
     </Suspense>
   )
