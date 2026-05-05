@@ -18,7 +18,7 @@ export default function WallPage() {
         .from('testimonials')
         .select('*')
         .eq('user_id', slug)
-        .gte('rating', 4)
+        .eq('is_approved', true)
         .order('created_at', { ascending: false })
       setTestimonials(data || [])
       setLoading(false)

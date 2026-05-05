@@ -9,15 +9,13 @@ const supabase = createClient(
 export async function GET(request: NextRequest) {
   const userId = request.nextUrl.searchParams.get('user_id')
 
-  if (!userId) {
-    return NextResponse.json([])
-  }
+  if (!userId) return NextResponse.json([])
 
   const { data } = await supabase
     .from('testimonials')
-    .select('name, message, rating')
+    .select('name, message, rating, before_image, after_image')
     .eq('user_id', userId)
-    .gte('rating', 4)
+    .eq('is_approved', true)
 
   return NextResponse.json(data || [], {
     headers: {
